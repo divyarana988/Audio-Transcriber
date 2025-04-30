@@ -30,6 +30,10 @@ public class TranscriptController {
 
     @PostMapping
     public ResponseEntity<String> transcribe(@RequestParam MultipartFile file) throws IOException {
+        if (file == null || file.isEmpty()) {
+            return ResponseEntity.badRequest().body("No file provided. Please upload an audio file.");
+        }
+
         File tempFile = File.createTempFile("audio", ".wav");
         file.transferTo(tempFile);
 
